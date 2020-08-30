@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un employé{% endblock %}
+
+{% block body %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+
+
+ <div class="example-wrapper">
+    <h1>Ajout d'un employé</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.prenom) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword, {
+            label: 'Password'
+        }) }}
+
+    {{ form_end(form) }}
+
+
+       
+        {% if app.user.hasRole('ADMIN') %}
+            <a href="{{ path('employes') }}">Retour</a>
+        {% endif %}
+
+
+
+        <a href="{{ path('app_logout') }}">Se déconecter</a>
+
+
+
+
+
+
+
+{% endblock %}

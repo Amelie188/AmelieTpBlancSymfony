@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DestinationController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+<h2 class="text-center mt-4">Ici, mes employés</h2>
+
+{% if app.user.hasRole('ROLE_SECRETAIRE') %}
+ <button type="button" class="btn btn-outline-danger mb-4" ><a href="{{ path('add_employe') }}"> Ajouter un employé</a></button>
+ {% endif %}
+
+<a href="{{ path('app_logout') }}"><button class="btn btn-primary">Se déconnecter</button></a> 
+
+
+
+<div class="card border-success mt-3 mb-3 text-center" style="max-width: 20rem;">
+<div class="card-body">
+
+  
+    <table>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Photo</th>
+            <th>Secteur</th>
+
+            {% if app.user.hasRole('ROLE_SECRETAIRE')%}
+            <th>Action</th>
+            {% endif %}
+          
+
+           {% for employe in employes %}
+            <tr>
+                <td>{{ employe.nom }}</td>
+                <td>{{ employe.prenom }}</td>
+                <td>{{ employe.email }}</td>
+                <td><img src="{{ employe.photo }}" style="max-width:50px"></td>
+                <td>{{ employe.secteur }}</td>
+       
+                {% if app.user.hasRole('ROLE_SECRETAIRE') %}
+                <td><a href="{{ path('employe_delete', {'id': employe.id}) }}"><button class="btn btn-primary">Supprimer un employé</button></a> 
+                {% endif %}
+        </tr>
+
+       
+
+    {% endfor %}
+    </table>
+</div>
+
+
+
+</div>
+</div>
+
+
+
+{% endblock %}
